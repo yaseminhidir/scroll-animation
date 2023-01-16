@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container-fluid ps-0" @scroll="handleScroll">
+
+            <div :class="'card mb-3 border-0 d-flex justify-content-center' + (index<=currentIndex ? ' show' : '') "
+                v-for="(content,index) in contents" :ref="'contents'">
+                <div class="bg position-relative d-flex align-items-center" :style="'background-image: url('+content.background+')'">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6 d-flex align-items-center">
+                                <img :src="content.image" v-if="index%2==0" class="card-img">
+                                <div v-else>
+                                    <div class="card-header p-5">
+                                        <h3>
+                                            {{content.title}}
+                                        </h3>
+                                    </div>
+                                    <div class="card-body p-5">
+                                        {{content.text}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 d-flex align-items-center" >
+                                <img :src="content.image" v-if="index%2!=0" class="card-img">
+                                <div v-else>
+                                    <div class="card-header p-5">
+                                        <h3>
+                                            {{content.title}}
+                                        </h3>
+                                    </div>
+                                    <div class="card-body p-5">
+                                        {{content.text}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+<style>
+    body {}
+
+    .card {
+
+        scroll-snap-align: start;
+        height: 100vh
+    }
+
+    .card .bg {
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        width:100vw;
+        height:100vh
+    }
+    .card-body, .card-header{
+        background: antiquewhite;
+        opacity: 0.5;
+        border-radius: 0 !important;
+    }
+    .container {
+        transition: all 0.4s ease-in;
+        transform: translateX(200%);
+    }
+
+    .card:nth-of-type(even) .container {
+        transform: translateX(-200%);
+    }
+
+
+    .card.show .container {
+        transform: translateX(0) !important;
+    }
+
+    .container-fluid {
+        width: 100vw;
+        height: 100vh;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+        overflow-x: hidden
+    }
+</style>
+
+
+<script>
+    const { createApp } = Vue
+
+    createApp({
+        data() {
+            return {
+                currentIndex: 0,
+                contents: [{
+                    title: "What is Lorem Ipsum?", text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                    image: "https://picsum.photos/800/800?random=1.jpg",
+                    background: "https://picsum.photos/1700/1700/?blur=2/?random=1.jpg"
+                },
+                {
+                    title: "Where does it come from?", text: "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from  by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.",
+                    image: "https://picsum.photos/800/800?random=.2jpg",
+                    background: "https://picsum.photos/1700/1700/?blur=2/?random=2.jpg"
+                },
+                {
+                    title: "Where can I get some?", text: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.",
+                    image: "https://picsum.photos/800/800?random=.3jpg",
+                    background: "https://picsum.photos/1700/1700/?blur=2/?random=3.jpg"
+                },
+                {
+                    title: "Why do we use it?", text: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+                    image: "https://picsum.photos/800/800?random=4.jpg",
+                    background: "https://picsum.photos/1700/1700/?blur=2/?random=4.jpg"
+                },
+                {
+                    title: "The standard Lorem Ipsum passage, used since the 1500s", text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    image: "https://picsum.photos/800/800?random=5.jpg",
+                    background: "https://picsum.photos/1700/1700/?blur=2/?random=5.jpg"
+                },
+                ]
+            }
+        },
+
+        methods: {
+            handleScroll() {
+                var closest_y = 9999999999;
+                var closest_index = 0;
+                for (var [index, ref] of this.$refs["contents"].entries()) {
+                    var distance = Math.abs(ref.getBoundingClientRect().y);
+                    if (distance < (window.innerHeight / 5 * 4)) {
+                        closest_y = distance;
+                        closest_index = index
+                    }
+                }
+                if (closest_index > this.currentIndex) {
+                    this.currentIndex = closest_index;
+                }
+
+            }
+        }
+    }).mount('#app')
+</script>
